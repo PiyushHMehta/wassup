@@ -1,0 +1,25 @@
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#chatArea::-webkit-scrollbar,
+#modalEntriesList::-webkit-scrollbar {
+    width: 8px;
+}
+#chatArea::-webkit-scrollbar-track,
+#modalEntriesList::-webkit-scrollbar-track {
+    background: #111827; /* Tailwind gray-900 */
+    border-radius: 4px;
+}
+#chatArea::-webkit-scrollbar-thumb,
+#modalEntriesList::-webkit-scrollbar-thumb {
+    background-color: #374151; /* Tailwind gray-700 */
+    border-radius: 4px;
+    border: 2px solid #111827; /* Track color for padding effect */
+}
+#chatArea::-webkit-scrollbar-thumb:hover,
+#modalEntriesList::-webkit-scrollbar-thumb:hover {
+    background-color: #4B5563; /* Tailwind gray-600 */
+}
