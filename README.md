@@ -4,7 +4,8 @@ This project is a functional prototype demonstrating a proposed "Appendable List
 
 **Live Demo:** [https://wasssup.vercel.app/](https://wasssup.vercel.app/)
 
-**Video Demonstration (90 seconds):** [https://drive.google.com/file/d/1ecLfqZw9Gl92zTiFg2fzXzVM5mHNhFGY/view?usp=sharing](https://drive.google.com/file/d/1ecLfqZw9Gl92zTiFg2fzXzVM5mHNhFGY/view?usp=sharing)
+**Video Demonstration (90 seconds):** [https://drive.google.com/file/d/1ecLfqZw9Gl92zTiFg2fzXzVM5mHNhFGY/view?usp=sharing]
+(https://www.youtube.com/watch?v=8vwcTvXrqIQ)
 
 ---
 
