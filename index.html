@@ -46,58 +46,170 @@
             </div>
 
             <!-- Attachment Menu (Initially Hidden) -->
-            <div id="attachmentMenu" class="hidden absolute bottom-full left-0 mb-2 w-64 bg-gray-700 rounded-lg shadow-xl py-2 z-20">
-                <button id="createAppendableListFromMenu" class="w-full text-left px-4 py-2.5 text-sm text-gray-200 hover:bg-gray-600 flex items-center">
-                    <i class="fas fa-list-alt fa-fw mr-3 text-gray-400"></i> Appendable List
-                </button>
-                <button class="w-full text-left px-4 py-2.5 text-sm text-gray-200 hover:bg-gray-600 flex items-center disabled:opacity-50" disabled>
-                    <i class="fas fa-image fa-fw mr-3 text-gray-400"></i> Photos & Videos
-                </button>
-                <button class="w-full text-left px-4 py-2.5 text-sm text-gray-200 hover:bg-gray-600 flex items-center disabled:opacity-50" disabled>
-                    <i class="fas fa-camera fa-fw mr-3 text-gray-400"></i> Camera
-                </button>
-                <button class="w-full text-left px-4 py-2.5 text-sm text-gray-200 hover:bg-gray-600 flex items-center disabled:opacity-50" disabled>
-                    <i class="fas fa-file-alt fa-fw mr-3 text-gray-400"></i> Document
-                </button>
-                <button class="w-full text-left px-4 py-2.5 text-sm text-gray-200 hover:bg-gray-600 flex items-center disabled:opacity-50" disabled>
-                    <i class="fas fa-poll fa-fw mr-3 text-gray-400"></i> Poll
-                </button>
+            <div id="attachmentMenu" class="hidden absolute bottom-full right-0 mb-2 w-48 bg-gray-800 rounded-md shadow-lg z-20">
+                <ul class="py-1">
+                    <li>
+                        <button id="createAppendableListFromMenu" class="block w-full text-left px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">
+                            <i class="fas fa-list-ul mr-2"></i> Create Appendable List
+                        </button>
+                    </li>
+                    <li>
+                        <button id="scheduleMessageFromMenu" class="block w-full text-left px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">
+                            <i class="fas fa-clock mr-2"></i> Schedule Message
+                        </button>
+                    </li>
+                    <li>
+                        <button id="viewScheduledMessagesFromMenu" class="block w-full text-left px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">
+                            <i class="fas fa-calendar-alt mr-2"></i> View Scheduled Messages
+                        </button>
+                    </li>
+                    <!-- Add other attachment options here -->
+                </ul>
             </div>
         </div>
     </div>
 
-    <!-- Modals (Appendable, Edit Message) remain the same as the previous complete version -->
-    <div id="appendModal" class="fixed inset-0 bg-black bg-opacity-85 backdrop-blur-sm overflow-y-auto h-full w-full hidden flex items-center justify-center p-4 z-50">
-        <div class="relative mx-auto p-6 border border-gray-700 w-full max-w-lg shadow-xl rounded-lg bg-gray-800 text-white">
-            <div class="mb-4 pb-4 border-b border-gray-700">
-                <h3 class="text-xl leading-6 font-semibold" id="modalPromptTitle"></h3>
-                <p class="text-xs text-gray-400 mt-1" id="modalInfo"></p>
-            </div>
-            <div id="modalEntriesList" class="max-h-64 overflow-y-auto space-y-4 mb-5 pr-2"></div>
-            <div class="mt-5 pt-5 border-t border-gray-700">
-                <h4 class="text-md font-medium text-gray-200 mb-2" id="modalInputLabel">Your Contribution:</h4>
-                <textarea id="modalInput" class="w-full p-3 border border-gray-600 bg-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-sm" rows="3" placeholder="Add your thoughts..."></textarea>
-            </div>
-            <div class="mt-6 flex flex-col sm:flex-row sm:justify-end sm:space-x-3 space-y-2 sm:space-y-0">
-                <button id="modalDeleteButton" class="hidden px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white text-sm font-medium rounded-md shadow-sm"><i class="fas fa-trash-alt mr-1.5"></i> Delete My Entry</button>
-                <button id="modalCancelButton" class="px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white text-sm font-medium rounded-md shadow-sm">Cancel</button>
-                <button id="modalSaveButton" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-md shadow-sm"><i class="fas fa-save mr-1.5"></i> Save</button>
+    <!-- Modal for Appending/Editing -->
+    <div id="appendModal" class="fixed inset-0 bg-gray-900 bg-opacity-80 overflow-y-auto h-full w-full hidden flex items-center justify-center z-30">
+        <div class="relative mx-auto p-5 border w-11/12 md:w-1/2 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modalPromptTitle">Append or Edit List</h3>
+                <p class="text-sm text-gray-500 mb-4" id="modalInfo"></p>
+                <div class="mt-2 px-7 py-3">
+                    <!-- Toggle Buttons -->
+                    <div class="flex justify-center items-center mb-4 space-x-2">
+                        <button id="toggleViewListBtn" class="text-xs bg-gray-700 text-white px-3 py-1.5 rounded hover:bg-gray-600 transition-colors duration-150">View List</button>
+                        <button id="toggleAppendEditBtn" class="text-xs bg-blue-500 text-white px-3 py-1.5 rounded hover:bg-blue-700 transition-colors duration-150">Append/Edit</button>
+                    </div>
+
+                    <!-- View List Area -->
+                    <div id="modalExistingEntries" class="text-left max-h-64 overflow-y-auto border p-2 rounded mb-3 bg-gray-50">
+                        <!-- Existing entries will be listed here -->
+                    </div>
+
+                    <!-- Append/Edit Area -->
+                    <div id="appendEditArea" class="hidden">
+                         <label for="modalInput" class="block text-sm font-medium text-gray-700 text-left mb-1" id="modalInputLabel">Add Your Contribution:</label>
+                         <textarea id="modalInput" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-800 text-white" rows="3" placeholder="Your contribution..."></textarea>
+                    </div>
+                </div>
+                <div class="items-center px-4 py-3">
+                    <button id="modalSaveButton" class="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                        Save
+                    </button>
+                     <button id="modalDeleteButton" class="mt-2 px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300 hidden">
+                        Delete My Entry
+                    </button>
+                    <button id="modalCancelButton" class="mt-2 px-4 py-2 bg-gray-300 text-gray-800 text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-200">
+                        Cancel
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Edit Message Modal structure (from previous full example) -->
-    <div id="editMessageModal" class="fixed inset-0 bg-black bg-opacity-85 backdrop-blur-sm overflow-y-auto h-full w-full hidden flex items-center justify-center p-4 z-50">
-        <div class="relative mx-auto p-6 border border-gray-700 w-full max-w-md shadow-xl rounded-lg bg-gray-800 text-white">
-            <h3 class="text-lg leading-6 font-semibold mb-4">Edit Message</h3>
-            <textarea id="editMessageInput" class="w-full p-3 border border-gray-600 bg-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-sm" rows="4"></textarea>
-            <div class="mt-6 flex justify-end space-x-3">
-                <button id="editMessageCancelButton" class="px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white text-sm font-medium rounded-md shadow-sm">Cancel</button>
-                <button id="editMessageSaveButton" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-md shadow-sm">Save Changes</button>
+    <!-- New Modal for Scheduling Messages -->
+    <div id="scheduleMessageModal" class="fixed inset-0 bg-gray-900 bg-opacity-80 overflow-y-auto h-full w-full hidden flex items-center justify-center z-30">
+        <div class="relative mx-auto p-5 border w-11/12 md:w-1/2 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Schedule Message</h3>
+                <div class="mt-2 px-7 py-3 text-left">
+                    <label for="scheduleMessageInput" class="block text-sm font-medium text-gray-700 mb-1">Message:</label>
+                    <textarea id="scheduleMessageInput" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-800 text-white" rows="4" placeholder="Enter message to schedule..."></textarea>
+
+                    <div class="mt-4">
+                        <label for="scheduleType" class="block text-sm font-medium text-gray-700 mb-1">Schedule Type:</label>
+                        <select id="scheduleType" class="w-full p-2 border rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="once">Once</option>
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                        </select>
+                    </div>
+
+                    <div id="scheduleDetails" class="mt-4">
+                        <!-- Details based on schedule type will appear here -->
+                        <div id="scheduleOnce" class="schedule-option">
+                            <label for="scheduleDateTime" class="block text-sm font-medium text-gray-700 mb-1">Date and Time:</label>
+                            <input type="datetime-local" id="scheduleDateTime" class="w-full p-2 border rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div id="scheduleDaily" class="schedule-option hidden">
+                             <label for="scheduleTimeDaily" class="block text-sm font-medium text-gray-700 mb-1">Time:</label>
+                             <input type="time" id="scheduleTimeDaily" class="w-full p-2 border rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                         <div id="scheduleWeekly" class="schedule-option hidden">
+                             <label class="block text-sm font-medium text-gray-700 mb-1">Days of the week:</label>
+                             <div class="flex flex-wrap gap-2">
+                                 <!-- Checkboxes for days -->
+                                 <label class="inline-flex items-center text-gray-200"><input type="checkbox" value="0" class="form-checkbox text-blue-500 rounded bg-gray-700 border-gray-600 focus:ring-blue-500 mr-1"> Sun</label>
+                                 <label class="inline-flex items-center text-gray-200"><input type="checkbox" value="1" class="form-checkbox text-blue-500 rounded bg-gray-700 border-gray-600 focus:ring-blue-500 mr-1"> Mon</label>
+                                 <label class="inline-flex items-center text-gray-200"><input type="checkbox" value="2" class="form-checkbox text-blue-500 rounded bg-gray-700 border-gray-600 focus:ring-blue-500 mr-1"> Tue</label>
+                                 <label class="inline-flex items-center text-gray-200"><input type="checkbox" value="3" class="form-checkbox text-blue-500 rounded bg-gray-700 border-gray-600 focus:ring-blue-500 mr-1"> Wed</label>
+                                 <label class="inline-flex items-center text-gray-200"><input type="checkbox" value="4" class="form-checkbox text-blue-500 rounded bg-gray-700 border-gray-600 focus:ring-blue-500 mr-1"> Thu</label>
+                                 <label class="inline-flex items-center text-gray-200"><input type="checkbox" value="5" class="form-checkbox text-blue-500 rounded bg-gray-700 border-gray-600 focus:ring-blue-500 mr-1"> Fri</label>
+                                 <label class="inline-flex items-center text-gray-200"><input type="checkbox" value="6" class="form-checkbox text-blue-500 rounded bg-gray-700 border-gray-600 focus:ring-blue-500 mr-1"> Sat</label>
+                             </div>
+                             <label for="scheduleTimeWeekly" class="block text-sm font-medium text-gray-700 mb-1 mt-2">Time:</label>
+                             <input type="time" id="scheduleTimeWeekly" class="w-full p-2 border rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                         <div id="scheduleMonthly" class="schedule-option hidden">
+                             <label class="block text-sm font-medium text-gray-700 mb-1">Days of the month (comma-separated, e.g., 1,15):</label>
+                             <input type="text" id="scheduleDaysMonthly" class="w-full p-2 border rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g., 1, 15, 30">
+                             <label for="scheduleTimeMonthly" class="block text-sm font-medium text-gray-700 mb-1 mt-2">Time:</label>
+                             <input type="time" id="scheduleTimeMonthly" class="w-full p-2 border rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+                </div>
+                <div class="items-center px-4 py-3">
+                    <button id="scheduleSaveButton" class="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                        Schedule
+                    </button>
+                    <button id="scheduleCancelButton" class="mt-2 px-4 py-2 bg-gray-300 text-gray-800 text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-200">
+                        Cancel
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- New Modal for Viewing Scheduled Messages -->
+    <div id="viewScheduledMessagesModal" class="fixed inset-0 bg-gray-900 bg-opacity-80 overflow-y-auto h-full w-full hidden flex items-center justify-center z-30">
+        <div class="relative mx-auto p-5 border w-11/12 md:w-1/2 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Your Scheduled Messages</h3>
+                <div class="mt-4 px-7 py-3 text-left max-h-96 overflow-y-auto" id="scheduledMessagesList">
+                    <!-- Scheduled messages will be listed here by JS -->
+                    <p class="text-center text-sm text-gray-400 py-8">Loading scheduled messages...</p>
+                </div>
+                <div class="items-center px-4 py-3">
+                    <button id="viewScheduledMessagesCloseButton" class="mt-2 px-4 py-2 bg-gray-300 text-gray-800 text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-200">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Editing Normal Messages -->
+    <div id="editMessageModal" class="fixed inset-0 bg-gray-900 bg-opacity-80 overflow-y-auto h-full w-full hidden flex items-center justify-center z-30">
+        <div class="relative mx-auto p-5 border w-11/12 md:w-1/2 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Edit Message</h3>
+                <div class="mt-2 px-7 py-3 text-left">
+                    <label for="editMessageInput" class="block text-sm font-medium text-gray-700 mb-1">Message:</label>
+                    <textarea id="editMessageInput" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-800 text-white" rows="4"></textarea>
+                </div>
+                <div class="items-center px-4 py-3">
+                    <button id="editMessageSaveButton" class="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                        Save Changes
+                    </button>
+                    <button id="editMessageCancelButton" class="mt-2 px-4 py-2 bg-gray-300 text-gray-800 text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-200">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="app.js"></script>
 </body>
