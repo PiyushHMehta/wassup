@@ -91,3 +91,7 @@ Piyush Mehta
 *   **GitHub:** [https://github.com/PiyushHMehta](https://github.com/PiyushHMehta)
 
 This prototype was developed as a personal project to explore potential UX improvements and automation features for messaging applications, focusing on both user-facing benefits and backend efficiency.
+
+
+![Inspiration for Appendable lists](https://github.com/user-attachments/assets/9f1f05bb-b16f-4c21-ac25-29c3454533f2)
+![Inspiration for scheduling messages](https://github.com/user-attachments/assets/3fd9a58c-6b6b-4965-b6f1-d70a9285a236)
